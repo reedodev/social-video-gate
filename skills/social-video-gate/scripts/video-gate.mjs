@@ -37,11 +37,24 @@ const TOLERANCE = 0.01; // 1% ratio tolerance (e.g. 1080x1918 still counts as 9:
 const args = process.argv.slice(2);
 const opt = (k) => { const i = args.indexOf('--' + k); return i >= 0 ? args[i + 1] : undefined; };
 const asJson = args.includes('--json');
-const file = args.find((a, i) => !a.startsWith('--') && !(i > 0 && args[i - 1] === '--target'));
-const targetName = (opt('target') || '').toLowerCase();
-const target = TARGETS[targetName];
+const VALUED = new Set(['--target', '--ratio', '--min', '--rec']);
+const file = args.find((a, i) => !a.startsWith('--') && !(i > 0 && VALUED.has(args[i - 1])));
+// custom target: --ratio 4:5 [--min 1080x1350] [--rec 1080x1350] (overrides or replaces --target)
+const pair = (s, sep) => (s && new RegExp('^\\d+' + sep + '\\d+$').test(s) ? s.split(sep).map(Number) : null);
+let targetName = (opt('target') || '').toLowerCase();
+let target = TARGETS[targetName] ? { ...TARGETS[targetName] } : null;
+if (opt('ratio')) {
+  const ratio = pair(opt('ratio'), ':');
+  if (!ratio) { console.error('--ratio must look like 4:5'); process.exit(2); }
+  const min = pair(opt('min'), 'x') || (ratio[0] >= ratio[1] ? [Math.round(720 * ratio[0] / ratio[1]), 720] : [720, Math.round(720 * ratio[1] / ratio[0])]);
+  target = { ratio, min, rec: pair(opt('rec'), 'x') || min, label: target ? target.label + ' (custom ' + ratio.join(':') + ')' : 'Custom ' + ratio.join(':') };
+  targetName = targetName || 'custom';
+} else if (target) {
+  if (pair(opt('min'), 'x')) target.min = pair(opt('min'), 'x');
+  if (pair(opt('rec'), 'x')) target.rec = pair(opt('rec'), 'x');
+}
 if (!file || !target) {
-  console.error(`usage: node video-gate.mjs <video> --target ${Object.keys(TARGETS).join('|')} [--json]`);
+  console.error(`usage: node video-gate.mjs <video> --target ${Object.keys(TARGETS).join('|')} | --ratio W:H [--min WxH] [--rec WxH] [--json]`);
   process.exit(2);
 }
 if (!fs.existsSync(file)) { console.error('file not found: ' + file); process.exit(2); }

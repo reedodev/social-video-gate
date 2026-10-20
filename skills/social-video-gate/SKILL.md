@@ -16,6 +16,28 @@ description: "릴스·쇼츠·틱톡·유튜브·스레드에 영상을 올리�
 - Node 18 이상
 - FFmpeg의 `ffprobe` (PATH에 있거나 `FFPROBE_PATH` 환경변수로 지정)
 
+<!-- prereq-adapt -->
+## 준비물 (쓰기 전에 있어야 하는 것)
+| 준비물 | 어디에 쓰나요 | 꼭 필요한가요 |
+|---|---|---|
+| Node 18 이상 | 스크립트 실행 | 필수 |
+| FFmpeg의 `ffprobe` | 영상 정보 읽기(`FFPROBE_PATH`로 경로 지정 가능) | 필수 |
+| 올릴 최종 영상 파일 | 편집 프로그램에서 마지막으로 내보낸 파일 | 필수 |
+| 업로드 화면의 미리보기 | 기술 검사 뒤 눈으로 확인 | 필수 |
+
+## 바꿔 쓰기: 이렇게 말하세요
+에이전트에게 왼쪽처럼 말하면 오른쪽을 바꿔서 실행합니다.
+
+| 이렇게 말하면 | 바뀌는 것 |
+|---|---|
+| "인스타 피드용 4:5 영상이야" | `--ratio 4:5` (최소 크기는 `--min 1080x1350`) |
+| "우리 채널은 1080x1920만 받아" | `--target reels --min 1080x1920` |
+| "권장 해상도 경고 기준을 바꿔 줘" | `--rec 1440x2560` |
+| "결과를 다른 프로그램에서 쓰게" | `--json` |
+| "올리기 전에 꼭 막아 줘" | 업로드 단계 앞에서 종료 코드가 0이 아니면 멈추게 합니다 |
+
+기본 대상(reels, shorts, tiktok, youtube, threads-landscape, square)과 허용 오차 1%는 `scripts/video-gate.mjs` 위쪽 `TARGETS`, `TOLERANCE`에서 바꿉니다.
+
 ## 사용
 ```bash
 node scripts/video-gate.mjs final.mp4 --target reels
