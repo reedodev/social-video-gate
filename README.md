@@ -55,6 +55,12 @@ node skills/social-video-gate/scripts/video-gate.mjs final.mp4 --target reels
 
 `node tests/run.mjs`가 SKILL.md 형식을 검사하고 예시 파일로 스크립트를 실제로 실행합니다. 푸시할 때마다 GitHub Actions가 같은 시험을 돌립니다(위 test 배지).
 
+<!-- credits -->
+## 출처와 영감
+
+- **영상 정보 읽기**: [FFmpeg의 ffprobe](https://ffmpeg.org/ffprobe.html)를 불러 씁니다. FFmpeg는 따로 설치하며 그 라이선스를 따릅니다.
+- **비율과 해상도 기준**: 9:16, 16:9, 1:1과 최소·권장 해상도는 각 플랫폼이 널리 안내하는 값을 작성자가 정리한 것이고, 플랫폼 정책은 바뀔 수 있습니다. 올리기 전에 해당 플랫폼의 최신 도움말과 실제 업로드 미리보기를 확인합니다.
+
 ## 만든 사람
 
 **리도**, AI 좌충우돌 실습 중인 20년차 엔지니어입니다. 매일 AI에게 일을 맡기다가 막힌 부분을 고쳐 가며 이 스킬을 만들었습니다.
@@ -67,5 +73,8 @@ node skills/social-video-gate/scripts/video-gate.mjs final.mp4 --target reels
 ## English
 
 Check the displayed aspect ratio of a video (rotation metadata and non-square pixels included) for Reels, Shorts, TikTok, YouTube or square, and fail before upload on mismatch.
+
+**Credits.**
+- Uses [ffprobe](https://ffmpeg.org/ffprobe.html) from FFmpeg (installed separately). Ratio and resolution targets are commonly published platform values collected by the author; platforms change their rules, so check the current help pages and the real upload preview.
 
 Install: `/plugin marketplace add reedodev/social-video-gate` then `/plugin install social-video-gate@social-video-gate`, or copy `skills/social-video-gate` into `~/.claude/skills/`. See [SKILL.md](skills/social-video-gate/SKILL.md) for the full procedure. MIT License; third-party models, fonts and libraries keep their own licenses.
