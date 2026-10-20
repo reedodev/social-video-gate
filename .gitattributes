@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.png binary
+*.hwpx binary
+skills/**/viewer/three.min.js linguist-vendored
+skills/**/viewer/models.js linguist-generated
+skills/**/templates/*.html linguist-vendored

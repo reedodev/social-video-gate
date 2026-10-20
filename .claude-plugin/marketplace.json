@@ -1,0 +1,21 @@
+{
+  "name": "social-video-gate",
+  "owner": {
+    "name": "Reedo"
+  },
+  "metadata": {
+    "description": "Check the displayed aspect ratio of a video (rotation metadata and non-square pixels included) for Reels, Shorts, TikTok, YouTube or square, and fail before upload on mismatch.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "social-video-gate",
+      "description": "Check the displayed aspect ratio of a video (rotation metadata and non-square pixels included) for Reels, Shorts, TikTok, YouTube or square, and fail before upload on mismatch.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/social-video-gate"
+      ]
+    }
+  ]
+}
