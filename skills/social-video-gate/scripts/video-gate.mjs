@@ -63,7 +63,7 @@ const ffprobe = process.env.FFPROBE_PATH || 'ffprobe';
 const r = spawnSync(ffprobe, ['-v', 'error', '-show_streams', '-show_format', '-of', 'json', path.resolve(file)],
   { encoding: 'utf8', windowsHide: true, maxBuffer: 16 * 1024 * 1024 });
 if (r.error || r.status !== 0) {
-  console.error('ffprobe failed: ' + (r.error ? r.error.message : (r.stderr || '').trim()) + '\n(Install FFmpeg or set FFPROBE_PATH.)');
+  console.error('ffprobe failed: ' + (r.error ? r.error.message + '\n(Install FFmpeg or set FFPROBE_PATH.)' : (r.stderr || '').trim() + '\n(The file may not be a valid video, or it may be damaged.)'));
   process.exit(2);
 }
 const probe = JSON.parse(r.stdout);
